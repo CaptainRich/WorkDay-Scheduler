@@ -4,12 +4,18 @@
 // Define the 9, one hour time blocks.
 var timeBlocks = ["9", "10", "11", "12", "1", "2", "3", "4", "5"];  
 
-// Create an object to hold the various task arrays
-var tasks = {
-    times:      [9],
-    taskText:   [9],
-    taskStatus: [9]
-};
+// Create an array to hold task objects
+var tasks = [
+    {times:  "9",  taskText: "", taskStatus: 0},    
+    {times:  "10", taskText: "", taskStatus: 0}, 
+    {times:  "11", taskText: "", taskStatus: 0}, 
+    {times:  "12", taskText: "", taskStatus: 0}, 
+    {times:  "1",  taskText: "", taskStatus: 0}, 
+    {times:  "2",  taskText: "", taskStatus: 0}, 
+    {times:  "3",  taskText: "", taskStatus: 0}, 
+    {times:  "4",  taskText: "", taskStatus: 0}, 
+    {times:  "5",  taskText: "", taskStatus: 0}, 
+];
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,24 +36,41 @@ var saveTasks = function() {
 /////////////////////////////////////////////////////////////////////////////////
 // Define the function to retrieve the tasks from local storage.
 var loadTasks = function() {
-    tasks = JSON.parse(localStorage.getItem("tasks"));
 
-    // If there was nothing there, simply initialize the tasks
-    if( !tasks ) {
-        for( i = 0; i < 9; i++ ) {
-            tasks.times[i] = timeBlocks[i];        // hour of working day
-            tasks.taskText[i] = "";                // an empty string
-            tasks.taskStatus[i] = 0;               // 0 indicates not saved
+    var tasksRead = [];
+
+    tasksread = JSON.parse(localStorage.getItem("tasks"));
+   
+    if( tasksRead.length > 0 ) {
+        tasks = tasksRead;
+    }
+
+
+    // Create the panels on the scheduler form
+    for( var i = 0; i < timeBlocks.length; i++ ) {
+        var taskTime    = $("<p>")
+             .addClass("col time-block hour")
+             .text(tasks[i].times);
+        var taskText    = $("<p>")
+             .addClass("col-10 description textarea past")
+             .text(tasks[i].taskText);
+        var taskBtn     = $("<button>").addClass("col saveBtn");
+
+        if( tasks[i].taskStatus == 0 ) {
+           var taskBtnIcon = $("<span>").addClass("oi oi-lock-unlocked");
         }
+        else {
+           var taskBtnIcon = $("<span>").addClass("oi oi-lock-locked");
+        }
+
+        // Append everything to the parent 'div row'
+        taskTime.append(taskText, taskBtn, taskBtnIcon );
+        $("row").append(taskTime);
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-var generateForm = function() {
-    for( var i = 0; i < timeBlocks.length; i++ ) {
 
-    }
-}
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -57,5 +80,3 @@ getNow();
 // Retrieve the tasks from local storage
 loadTasks();
 
-// Generate the basic form of 9 rows.
-generateForm();
