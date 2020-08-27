@@ -4,26 +4,25 @@
 
 // Create an array to hold the 9 task objects
 var tasks = [
-    {times:  "9",  taskText: "Sample task 1", taskStatus: 0, index: 0, hr24: 9},    
-    {times:  "10", taskText: "Sample task 2", taskStatus: 1, index: 1, hr24: 10}, 
-    {times:  "11", taskText: "", taskStatus: 0, index: 2, hr24: 11}, 
-    {times:  "12", taskText: "", taskStatus: 0, index: 3, hr24: 12}, 
-    {times:  "1",  taskText: "", taskStatus: 0, index: 4, hr24: 13}, 
-    {times:  "2",  taskText: "", taskStatus: 0, index: 5, hr24: 14}, 
-    {times:  "3",  taskText: "", taskStatus: 0, index: 6, hr24: 15}, 
-    {times:  "4",  taskText: "", taskStatus: 0, index: 7, hr24: 16}, 
-    {times:  "5",  taskText: "", taskStatus: 0, index: 8, hr24: 17}, 
+    {times:  "9 am",  taskText: "Sample task 1", taskStatus: 0, index: 0, hr24: 9},    
+    {times:  "10 am", taskText: "Sample task 2", taskStatus: 1, index: 1, hr24: 10}, 
+    {times:  "11 am", taskText: "Sample task 3", taskStatus: 0, index: 2, hr24: 11}, 
+    {times:  "12 pm", taskText: "", taskStatus: 0, index: 3, hr24: 12}, 
+    {times:  "1 pm",  taskText: "", taskStatus: 0, index: 4, hr24: 13}, 
+    {times:  "2 pm",  taskText: "", taskStatus: 0, index: 5, hr24: 14}, 
+    {times:  "3 pm",  taskText: "", taskStatus: 0, index: 6, hr24: 15}, 
+    {times:  "4 pm",  taskText: "", taskStatus: 0, index: 7, hr24: 16}, 
+    {times:  "5 pm",  taskText: "", taskStatus: 0, index: 8, hr24: 17}, 
 ];
 
-
-    // Get the current hour of the day
-    var currentHour = moment().hour();
 
 ////////////////////////////////////////////////////////////////////////////////
 // Get the current date/time
 var getNow = function() {
     var rightNow = moment().format('LLLL');
     $("#currentDay").text(rightNow);           // put the current time/date on the page
+
+    var currentHour = moment().hour();
 }
 
 
@@ -46,41 +45,39 @@ var loadTasks = function() {
         tasks = tasksRead;
     }
 
-    // Get the current hour of the day
-    var currentHour = moment().hour();
-
     // Create the panels on the scheduler form
     for( var i = 0; i < tasks.length; i++ ) {
        // var taskTime    = $("<p>").addClass("col time-block hour");
-       var taskTime = $("row").add("p").addClass("col time-block hour");
+       var taskTime = $("<p>").addClass("col time-block hour");
            taskTime.text(tasks[i].times);
 
         // When creating this panel, check the time and adjust the CSS class
         // to 'past', 'present', or "future'.    
 
         var taskText;
-        if( tasks[i].times < currentHour ) {
+        if( tasks[i].hr24 < currentHour ) {
             taskText = $("<p>").addClass("col-10 description past");
         }
-        else if( tasks[i].times > currentHour ) {
+        else if( tasks[i].hr24 > currentHour ) {
             taskText = $("<p>").addClass("col-10 description future");
         }
         else {
             taskText = $("<p>").addClass("col-10 description present");
         }
 
-        taskText     = $("<p>").addClass("col-10 description past");
         taskText.text(tasks[i].taskText);
 
         var taskBtn  = $("<button>").addClass("col saveBtn");
 
-        // Items from local storage are (by nature) persistent
+        // Items from local storage are (by nature) persistent/saved
         var taskBtnIcon = $("<span>").addClass("oi oi-lock-locked");
         
 
-        // Append everything to the parent 'div row'
+        // Append everything to the parent 'div panel'
         taskTime.append(taskText, taskBtn, taskBtnIcon );
-        $("row").append(taskTime);
+        $("panel").append(taskTime);
+
+        var breakHere = taskTime;
     }
 }
 
@@ -126,9 +123,15 @@ $(".description").on("blur", "textarea", function() {
 
 /////////////////////////////////////////////////////////////////////////////////
 // The user clicked on the [save] button
-//$(".description").on("click", "span", function() {
+$(".description").on("click", "span", function() {
 
-//}
+    $(this).removeClass("oi oi-lock-locked oi-lock-unlocked");
+    $(this).addClass("oi oi-lock-locked");
+
+    // Save all of the tasks to local storage
+    saveTasks();
+
+});
 
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -142,20 +145,23 @@ var auditTimes = function(timeEl, index) {
     $(timeEl).removeClass("col-10 description past future present");
   
     // Apply new class if the task is near/over the due date
-    if( time < currentHour) {
-      $(timeEl).addClass("col-10 description past");
+    if (time < currentHour) {
+        $(timeEl).addClass("col-10 description past");
     }
-    else if ( time > currentHour) {
-      $(timeEl).addClass("col-10 description future");
+    else if (time > currentHour) {
+        $(timeEl).addClass("col-10 description future");
     }
     else {
-        $(timeEl).addClass("col-10 description present");   
+        $(timeEl).addClass("col-10 description present");
     }
   }
 
   ///////////////////////////////////////////////////////////////////////
 // Get the current date and time and put them in the header
 getNow();
+
+
+var currentHour = moment().hour();
 
 // Retrieve the tasks from local storage
 loadTasks();
