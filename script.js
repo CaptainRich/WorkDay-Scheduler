@@ -166,6 +166,10 @@ var currentHour = moment().hour();
 // Retrieve the tasks from local storage
 loadTasks();
 
+///////////////////////////////////////////////////////////////////
+// Start a timer to update the current date/time in the header
+
+setInterval( getNow, 1000 * 60 );
 
 ///////////////////////////////////////////////////////////////////
 // Start a timer to audit the tasks every 15 minutes so that near/past 
