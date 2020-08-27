@@ -4,6 +4,11 @@ body {
   line-height: 1;
 }
 
+#bootstrap-override title{
+  font-family: "Staanliches", sans-serif;
+  font-size: 1 rem;
+} 
+
 textarea{
   background: transparent;
   border: none;
@@ -63,6 +68,8 @@ textarea{
   border-bottom-right-radius: 15px;
   background-color: #06AED5;
   color: white;
+  appearance: none;
+  height: 65px;
 }
 
 .saveBtn i:hover {

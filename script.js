@@ -48,12 +48,12 @@ var loadTasks = function() {
 
     // Create the panels on the scheduler form
     for( var i = 0; i < timeBlocks.length; i++ ) {
-        var taskTime    = $("<p>")
-             .addClass("col time-block hour")
-             .text(tasks[i].times);
-        var taskText    = $("<p>")
-             .addClass("col-10 description textarea past")
-             .text(tasks[i].taskText);
+        var taskTime    = $("<p>").addClass("col time-block hour");
+            taskTime.text(tasks[i].times);
+
+        var taskText    = $("<p>").addClass("col-10 description textarea past");
+            taskText.text(tasks[i].taskText);
+
         var taskBtn     = $("<button>").addClass("col saveBtn");
 
         if( tasks[i].taskStatus == 0 ) {
@@ -70,7 +70,30 @@ var loadTasks = function() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// The user clicked on a task item, switch this to 'edit' mode
+$(".description").on("click", "p", function() {
+    var text =  $(this)
+      .text()
+      .trim();
+  
+    var textInput = $("<textArea>")
+      .addClass("formControl")
+      .val(text);
+  
+      $(this).replaceWith(textInput);
+      textInput.trigger("focus");
+  
+    console.log(text);  // call back that just shows a 'p' was clicked
+  });
+  
 
+  
+    // Change the task back from a 'textarea' to a 'p'
+    var taskP = $("<p>").addClass("m-1").text(text);
+    $(this).replaceWith(taskP);
+  });
+  
 
 /////////////////////////////////////////////////////////////////////////////////
 
