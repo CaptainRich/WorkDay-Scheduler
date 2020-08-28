@@ -47,7 +47,7 @@ var loadTasks = function() {
 
     // Create the panels on the scheduler form
     for( var i = 0; i < tasks.length; i++ ) {
-       // var taskTime    = $("<p>").addClass("col time-block hour");
+ 
        var taskTime = $("<p>").addClass("col time-block hour");
            taskTime.text(tasks[i].times);
 
@@ -73,11 +73,15 @@ var loadTasks = function() {
         var taskBtnIcon = $("<span>").addClass("oi oi-lock-locked");
         
 
-        // Append everything to the parent 'div panel'
-        taskTime.append(taskText, taskBtn, taskBtnIcon );
-        $("panel").append(taskTime);
+        // Append the icon to the button
+        taskBtn.append(taskBtnIcon);
+ 
+        // Finally put the 'div panel' in the 'div container', with
+        // the time, task, and button.
+        var panelTask = $("<div>").addClass("row panel");
+        panelTask.append( taskTime, taskText, taskBtn );
+        $(".planner").append(panelTask);
 
-        var breakHere = taskTime;
     }
 }
 

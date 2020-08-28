@@ -21,6 +21,23 @@
 
 
   <body>
+    <!-- Put a navigation bar at the very top. -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/CaptainRich/WorkDay-Scheduler/blob/master/README.md">ReadMe</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
     <!-- The top of the page. -->
     <header class="jumbotron">
       <h1 class="display-3">Work Day Scheduler</h1>
@@ -29,7 +46,7 @@
     </header>
 
     <!-- Define the actual 'planner' area. -->
-    <div class="container ">
+    <div class="container planner">
       <div class="row panel">
        <!--  <p class="col time-block hour">time</p>
         <p class="col-10 description past">task area</p>
