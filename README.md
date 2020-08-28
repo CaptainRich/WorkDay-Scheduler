@@ -35,5 +35,5 @@ The deployment link to display the updated web page is:
 
 ## Application Screen Shot
 
-![Password Generator Image](https://github.com/CaptainRich/WorkDay-Scheduler/blob/master/screenshot.png)
+![Workday Planner Image](https://github.com/CaptainRich/WorkDay-Scheduler/blob/master/workday-screenshot.jpg)
 
