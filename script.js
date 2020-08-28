@@ -67,7 +67,7 @@ var loadTasks = function() {
 
         taskText.text(tasks[i].taskText);
 
-        var taskBtn  = $("<button>").addClass("col saveBtn");
+        var taskBtn  = $("<button id='saveIt'>").addClass("col saveBtn");
 
         // Items from local storage are (by nature) persistent/saved
         var taskBtnIcon = $("<span>").addClass("oi oi-lock-locked");
@@ -127,7 +127,9 @@ $(".description").on("blur", "textarea", function() {
 
 /////////////////////////////////////////////////////////////////////////////////
 // The user clicked on the [save] button
-$(".description").on("click", "span", function() {
+$("#saveIt div").on("click button", function(event) {
+
+    event.preventDefault();
 
     $(this).removeClass("oi oi-lock-locked oi-lock-unlocked");
     $(this).addClass("oi oi-lock-locked");
