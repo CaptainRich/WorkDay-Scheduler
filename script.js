@@ -133,12 +133,6 @@ $(document.body).on("blur", "textarea", function() {
 // The user clicked on the [save] button
 $(document.body).on( "click", ".saveBtn", function() {
 
-    //event.preventDefault();
-
-    //$(this).removeClass("oi oi-lock-locked");
-    //$(this).removeClass("oi oi-lock-unlocked");
-    //$(this).addClass("oi oi-lock-locked");
-
     // Save all of the tasks to local storage
     saveTasks();
 
