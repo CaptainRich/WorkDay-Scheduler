@@ -1,12 +1,12 @@
 // Javascript file for Workday Planner
 
-
+// Richard Ay,  August 2020
 
 // Create an array to hold the 9 task objects
 var tasks = [
-    {times:  "9 am",  taskText: "Sample task 1", taskStatus: 0, index: 0, hr24: 9},    
-    {times:  "10 am", taskText: "Sample task 2", taskStatus: 1, index: 1, hr24: 10}, 
-    {times:  "11 am", taskText: "Sample task 3", taskStatus: 0, index: 2, hr24: 11}, 
+    {times:  "9 am",  taskText: "", taskStatus: 0, index: 0, hr24: 9},    
+    {times:  "10 am", taskText: "", taskStatus: 1, index: 1, hr24: 10}, 
+    {times:  "11 am", taskText: "", taskStatus: 0, index: 2, hr24: 11}, 
     {times:  "12 pm", taskText: "", taskStatus: 0, index: 3, hr24: 12}, 
     {times:  "1 pm",  taskText: "", taskStatus: 0, index: 4, hr24: 13}, 
     {times:  "2 pm",  taskText: "", taskStatus: 0, index: 5, hr24: 14}, 
@@ -14,6 +14,8 @@ var tasks = [
     {times:  "4 pm",  taskText: "", taskStatus: 0, index: 7, hr24: 16}, 
     {times:  "5 pm",  taskText: "", taskStatus: 0, index: 8, hr24: 17}, 
 ];
+
+var jIndex;          // the index value associated with the task being edited.
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,10 +66,11 @@ var loadTasks = function() {
         else {
             taskText = $("<p>").addClass("col-10 description present");
         }
+        taskText.text(tasks[i].taskText);     // set the page element's text for this task
+        taskText.attr({id:i});                // set the page element's 'id" for this task
 
-        taskText.text(tasks[i].taskText);
 
-        var taskBtn  = $("<button id='saveIt'>").addClass("col saveBtn");
+        var taskBtn  = $("<button>").addClass("col saveBtn");
 
         // Items from local storage are (by nature) persistent/saved
         var taskBtnIcon = $("<span>").addClass("oi oi-lock-locked");
@@ -83,14 +86,18 @@ var loadTasks = function() {
         $(".planner").append(panelTask);
 
     }
+    return taskText;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 // The user clicked on a task item, switch this to 'edit' mode
-$(".description").on("click", ".description", function() {
+$(document.body).on("click", ".description", function(event) {
     var text =  $(this)
       .text()
       .trim();
+
+    // Start by getting the tasks position in the list of other "p" elements
+    jIndex = event.target.getAttribute("id");
   
     var textInput = $("<textArea>")
       .addClass("formControl")
@@ -98,22 +105,19 @@ $(".description").on("click", ".description", function() {
   
       $(this).replaceWith(textInput);
       textInput.trigger("focus");
-  
-    console.log(text);  // call back that just shows a 'description' was clicked
+
   });
   
 // This blur event will trigger as soon as the user interacts with anything
 // other than the 'textarea'.
-$(".description").on("blur", "textarea", function() {
+$(document.body).on("blur", "textarea", function() {
 
     // Get the textArea's current value/text
     var text = $(this).val().trim();
   
-    // Get the task's position on the planner page
-    var index = $(this).index;
   
-    // Update the edited task using the index just determined.
-    tasks[index].taskText = text;
+    // Update the edited task using the index (jIndex) determined above in the 'edit' function.  
+    tasks[jIndex].taskText = text;
    
   
     // Change the task back from a 'textarea' to a 'p'
@@ -121,18 +125,19 @@ $(".description").on("blur", "textarea", function() {
     $(this).replaceWith(taskP);
 
     // Audit the modified task time-wise
-    auditTimes( this, index );
+    auditTimes( this, jIndex );
   });
  
 
 /////////////////////////////////////////////////////////////////////////////////
 // The user clicked on the [save] button
-$("#saveIt div").on("click button", function(event) {
+$(document.body).on( "click", ".saveBtn", function() {
 
-    event.preventDefault();
+    //event.preventDefault();
 
-    $(this).removeClass("oi oi-lock-locked oi-lock-unlocked");
-    $(this).addClass("oi oi-lock-locked");
+    //$(this).removeClass("oi oi-lock-locked");
+    //$(this).removeClass("oi oi-lock-unlocked");
+    //$(this).addClass("oi oi-lock-locked");
 
     // Save all of the tasks to local storage
     saveTasks();
@@ -170,7 +175,7 @@ getNow();
 var currentHour = moment().hour();
 
 // Retrieve the tasks from local storage
-loadTasks();
+var junk = loadTasks();
 
 ///////////////////////////////////////////////////////////////////
 // Start a timer to update the current date/time in the header
@@ -186,3 +191,4 @@ setInterval(function() {
       auditTimes(el, index);
     });
    }, (1000 * 60 * 15) );       // audit the tasks every 30 minutes
+
