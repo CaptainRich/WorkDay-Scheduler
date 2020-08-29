@@ -17,7 +17,8 @@ var tasks = [
 
 var jIndex;          // the index value associated with the task being edited.
 var startUp = true;  // flag indicating start-up or page reload
-var currentClass;
+var currentClass;    // variable to store/track the current element's class(es)
+var currentHour;     // variable to track the current hour of the day.
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,7 +27,7 @@ var getNow = function() {
     var rightNow = moment().format('LLLL');
     $("#currentDay").text(rightNow);           // put the current time/date on the page
 
-    var currentHour = moment().hour();
+    currentHour = moment().hour();
 }
 
 
@@ -92,7 +93,6 @@ var loadTasks = function() {
         $(".planner").append(panelTask);
 
     }
-    //return taskText;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +130,6 @@ $(document.body).on("blur", "textarea", function() {
    
   
     // Change the task back from a 'textarea' to a 'p'
-    //var taskP = $("<p>").addClass("col-10 description past").text(text);
     var taskP = $("<p>").addClass(currentClass).text(text);
     taskP.attr({id:jIndex});                // reset the page element's 'id" for this task
     $(this).replaceWith(taskP);
@@ -152,16 +151,11 @@ $(document.body).on( "click", ".saveBtn", function() {
 // Setup the 'date' audit function
 var auditTimes = function(timeEl) {
 
-
+    // Start by getting the tasks position in the list of other "p" elements
     let index = timeEl;
 
-    // Get the time from the task element's hr24 property
-    //var kIndex = $(timeEl).attr("id");
-    //var time = tasks[kIndex].hr24;
 
-    // Start by getting the tasks position in the list of other "p" elements
-    //var kIndex = $(timeEl).getAttribute("id");
-    var time = tasks[index].hr24;
+    var time = tasks[index].hr24;      // the time of the current task panel.
   
 
     timeEl = "#" + timeEl;
@@ -187,8 +181,6 @@ var auditTimes = function(timeEl) {
 // Get the current date and time and put them in the header
 getNow();
 
-
-var currentHour = moment().hour();
 
 // Retrieve the tasks from local storage
 loadTasks();
