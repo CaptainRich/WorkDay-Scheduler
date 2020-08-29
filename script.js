@@ -16,6 +16,8 @@ var tasks = [
 ];
 
 var jIndex;          // the index value associated with the task being edited.
+var startUp = true;  // flag indicating start-up or page reload
+var currentClass;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +59,10 @@ var loadTasks = function() {
         // to 'past', 'present', or "future'.    
 
         var taskText;
+
+        // Remove any previous classes from this element
+        taskText = $("<p>").removeClass("col-10 description past future present");
+
         if( tasks[i].hr24 < currentHour ) {
             taskText = $("<p>").addClass("col-10 description past");
         }
@@ -86,7 +92,7 @@ var loadTasks = function() {
         $(".planner").append(panelTask);
 
     }
-    return taskText;
+    //return taskText;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -103,8 +109,11 @@ $(document.body).on("click", ".description", function(event) {
       .addClass("formControl")
       .val(text);
   
-      $(this).replaceWith(textInput);
-      textInput.trigger("focus");
+    $(this).replaceWith(textInput);
+     textInput.trigger("focus");
+
+    currentClass = $(this).attr("class");
+
 
   });
   
@@ -121,11 +130,11 @@ $(document.body).on("blur", "textarea", function() {
    
   
     // Change the task back from a 'textarea' to a 'p'
-    var taskP = $("<p>").addClass("col-10 description past").text(text);
+    //var taskP = $("<p>").addClass("col-10 description past").text(text);
+    var taskP = $("<p>").addClass(currentClass).text(text);
+    taskP.attr({id:jIndex});                // reset the page element's 'id" for this task
     $(this).replaceWith(taskP);
 
-    // Audit the modified task time-wise
-    auditTimes( this, jIndex );
   });
  
 
@@ -145,6 +154,10 @@ var auditTimes = function(timeEl, index) {
 
     // Get the time from the task element's hr24 property
     var time = tasks[index].hr24;
+
+    // Start by getting the tasks position in the list of other "p" elements
+     //var kIndex = $(timeEl).getAttribute("id");
+    // var time = tasks[kIndex].hr24;
   
     // Remove any old classes from the element
     $(timeEl).removeClass("col-10 description past future present");
@@ -161,6 +174,8 @@ var auditTimes = function(timeEl, index) {
     }
   }
 
+
+
   ///////////////////////////////////////////////////////////////////////
 // Get the current date and time and put them in the header
 getNow();
@@ -169,7 +184,7 @@ getNow();
 var currentHour = moment().hour();
 
 // Retrieve the tasks from local storage
-var junk = loadTasks();
+loadTasks();
 
 ///////////////////////////////////////////////////////////////////
 // Start a timer to update the current date/time in the header
@@ -182,7 +197,8 @@ setInterval( getNow, 1000 * 60 );
 
 setInterval(function() {
     $(".description").each(function(el, index){
+    //tasks.forEach(function(el, index){    
       auditTimes(el, index);
     });
-   }, (1000 * 60 * 15) );       // audit the tasks every 30 minutes
+    }, (1000 * 60 * 5) );       // audit the tasks every 5 minutes
 

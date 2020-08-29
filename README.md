@@ -30,15 +30,15 @@ The deployment link to display the updated web page is:
 
 ## Planner/Scheduler Logic
 
-1) An array of tasks objects is initialized when the application starts.
+1) An array of tasks objects is initialized (empty) when the application starts.
 2) The 'moment.js' library is used to obtain the current date and time.
-3) Local storage is accessed to read in the array of task objects.
+3) Local storage is accessed to read in the array of task objects, which may or may not exist.
 4) The daily planner is dynamically created for each hour of the day, possibly populated with the tasks from local storage if any exist.
-5) During the creating of these elements, each is assigned an ID.
+5) During the creation of these elements, each is assigned an ID.
 6) Event handlers are used to determine if the user clicks on a task area or on a "save button".
 * Clicking on any 'save' button saves the entire array of all objects (to local storage).
-* Clicking on a task changes that area to a text box for editing.  Changing the focus puts the new/edited task back in the template form.
-7) A 'time audit' timer runs (every 15 minutes) to monitor the time and possibly change the background color of the tasks to represent past, current, and future activities.
+* Clicking on a task changes that area to a text box for editing.  Changing the focus puts the new/edited task back in the template form, and updates the associated object in the array.
+7) A 'time audit' timer runs (every 5 minutes) to monitor the time and possibly change the background color of the tasks to represent past, current, and future activities.
 8) A second timer runs to update the time in the page header (every minute).
 
 
