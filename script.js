@@ -150,15 +150,22 @@ $(document.body).on( "click", ".saveBtn", function() {
 
 /////////////////////////////////////////////////////////////////////////////////
 // Setup the 'date' audit function
-var auditTimes = function(timeEl, index) {
+var auditTimes = function(timeEl) {
+
+
+    let index = timeEl;
 
     // Get the time from the task element's hr24 property
-    var time = tasks[index].hr24;
+    //var kIndex = $(timeEl).attr("id");
+    //var time = tasks[kIndex].hr24;
 
     // Start by getting the tasks position in the list of other "p" elements
-     //var kIndex = $(timeEl).getAttribute("id");
-    // var time = tasks[kIndex].hr24;
+    //var kIndex = $(timeEl).getAttribute("id");
+    var time = tasks[index].hr24;
   
+
+    timeEl = "#" + timeEl;
+
     // Remove any old classes from the element
     $(timeEl).removeClass("col-10 description past future present");
   
@@ -196,9 +203,9 @@ setInterval( getNow, 1000 * 60 );
 // times can be colored appropriately.
 
 setInterval(function() {
-    $(".description").each(function(el, index){
+    $(".description").each(function(el){
     //tasks.forEach(function(el, index){    
-      auditTimes(el, index);
+      auditTimes(el);
     });
     }, (1000 * 60 * 5) );       // audit the tasks every 5 minutes
 
