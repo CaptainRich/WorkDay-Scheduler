@@ -6,7 +6,7 @@ Richard Ay, August 2020
 * [Project Objective](#project-objective)
 * [Acceptance Criteria](#acceptance-criteria)
 * [Deployment Link](#deployment-link)
-* [Password Generation Logic](#password-generation-logic)
+* [Planner/Scheduler Logic](#planner/scheduler-logic)
 * [Application Screen Shot](#application-screen-shot)
 
 
