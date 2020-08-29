@@ -6,7 +6,7 @@ Richard Ay, August 2020
 * [Project Objective](#project-objective)
 * [Acceptance Criteria](#acceptance-criteria)
 * [Deployment Link](#deployment-link)
-* [Planner/Scheduler Logic](#planner/scheduler-logic)
+* [Planner Scheduler Logic](#planner-scheduler-logic)
 * [Application Screen Shot](#application-screen-shot)
 
 
@@ -28,7 +28,7 @@ GIVEN I am using a daily planner to create a schedule.
 The deployment link to display the updated web page is: 
 [GitHub Pages](https://captainrich.github.io/WorkDay-Scheduler/) 
 
-## Planner/Scheduler Logic
+## Planner Scheduler Logic
 
 1) An array of tasks objects is initialized (empty) when the application starts.
 2) The 'moment.js' library is used to obtain the current date and time.
