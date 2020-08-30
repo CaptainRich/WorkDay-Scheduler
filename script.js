@@ -191,7 +191,7 @@ loadTasks();
 setInterval( getNow, 1000 * 60 );
 
 ///////////////////////////////////////////////////////////////////
-// Start a timer to audit the tasks every 15 minutes so that near/past 
+// Start a timer to audit the tasks every 2 minutes so that near/past 
 // times can be colored appropriately.
 
 setInterval(function() {
@@ -199,5 +199,5 @@ setInterval(function() {
     //tasks.forEach(function(el, index){    
       auditTimes(el);
     });
-    }, (1000 * 60 * 5) );       // audit the tasks every 5 minutes
+    }, (1000 * 60 * 2) );       // audit the tasks every 2 minutes
 

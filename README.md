@@ -38,7 +38,7 @@ The deployment link to display the updated web page is:
 6) Event handlers are used to determine if the user clicks on a task area or on a "save button".
 * Clicking on any 'save' button saves the entire array of all objects (to local storage).
 * Clicking on a task changes that area to a text box for editing.  Changing the focus puts the new/edited task back in the template form, and updates the associated object in the array, including the appropriate background color.
-7) A 'time audit' timer runs (every 5 minutes) to monitor the time and possibly change the background color of the tasks to represent past, current, and future activities - based on the current 'hour' of the day.
+7) A 'time audit' timer runs (every 2 minutes) to monitor the time and possibly change the background color of the tasks to represent past, current, and future activities - based on the current 'hour' of the day. Task backgrounds may not change exactly on the hour, it depends on when within the 2 minute timer window the application was started.
 8) A second timer runs to update the time in the page header (every minute).
 
 
